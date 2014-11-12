@@ -16,87 +16,291 @@ public interface ICurso {
     ////////////////////////////////////////////////////////////////////////////////
     // Todos
 
+    /**
+     * Realiza login no sistema com o usuário e senha informado
+     * @param user
+     * @param senha
+     * @return verdadeiro se conseguiu logar no sistema
+     */
     public boolean login(String user, String senha);
+    /**
+     * Realiza logout no sistema
+     */
     public void logout();
 
-    // retorna codigo de nome das disciplinas
+    /**
+     * retorna codigo de nome das disciplinas
+     * @return Map<Codigo,nome>
+     */
     public Map<String,String> getDisciplinas();
-    // retorna codigo da disciplina e nomes das turmas que o aluno esta inscrito ou que o professor vai ministrar
+    /**
+     * retorna codigo da disciplina e nomes das turmas que o aluno esta inscrito ou que o professor vai ministrar
+     * @return Map<CodigoDisciplina,nomeTurma>
+     */     
     public Map<String,String> getMinhasTurmas();
-    // retorna nome das turmas de uma disciplina
+    /**
+     * retorna nome das turmas de uma disciplina
+     * @param codigoDisciplina
+     * @return List<Nome>
+     */
     public List<String> getTurmas(String codigoDisciplina);
 
-    // retorna o nome das avaliações de uma turma
+    /**
+     * retorna o nome das avaliações de uma turma
+     * @param codigoTurma
+     * @return List<Nome>
+     */
     public List<String> getAvaliacoes(String codigoTurma);
-    // retorna o nome dos exams de uma avaliação
+    /**
+     * retorna o nome dos exams de uma avaliação
+     * @param codigoAvaliacao
+     * @return List<Nome>
+     */ 
     public List<String> getExames(int codigoAvaliacao);
-    // retorna o número de questões de um exame (trabalho retorna 1)
+    /**
+     * retorna o número de questões de um exame (trabalho retorna 1)
+     * @param codigoExame
+     * @return Quantidade de questoes
+     */
     public int totalQuestoes(String codigoExame);
 
     ///////////////////////////////////////////////////////////////////////////////
     // Gerente
 
+    /**
+     * Cria uma disciplina
+     * @param código
+     * @param nome
+     * @param ch 
+     */
     public void criarDisciplina(String código, String nome, int ch);
+    /**
+     * Remove uma disciplina
+     * @param código 
+     */
     public void removerDisciplina(String código);
 
-    // retorna o cpf e nome dos professores
+    /**
+     * retorna o cpf e nome dos professores
+     * @return Map<Cpf,Nome>
+     */
     public Map<String,String> getProfessores();
+    /**
+     * Cria um professor
+     * @param nome
+     * @param telefone
+     * @param email
+     * @param cpf
+     * @param gerente 
+     */
     public void criarProfessor(String nome, String telefone, String email, String cpf, boolean gerente);
+    /**
+     * remove um professor
+     * @param cpf 
+     */
     public void removerProfessor(String cpf);
 
-    // retorna matricula e nome dos alunos
+    /**
+     * retorna matricula e nome dos alunos
+     * @return Map<Matricula,nome>
+     */
     public Map<String,String> getAlunos();
+    /**
+     * Cria um aluno
+     * @param nome
+     * @param telefone
+     * @param email
+     * @param matricula 
+     */
     public void criarAluno(String nome, String telefone, String email, String matricula);
+    /**
+     * Remove um aluno
+     * @param matricula 
+     */
     public void removerAluno(String matricula);
 
-    // retorna codigo e nome das turmas
-    public Map<String,String> getTurmas();
+    /**
+     * Cria uma turma em uma disciplina
+     * @param codigoDisciplina
+     * @param nome 
+     */
     public void criarTurma(String codigoDisciplina, String nome);
+    /**
+     * remove uma turma de uma disciplina
+     * @param codigoDisciplina
+     * @param nome 
+     */
     public void removerTurma(String codigoDisciplina, String nome);
 
     ///////////////////////////////////////////////////////////////////////////////////
     // Gerente e Professor
 
-    //retorna codigo e texto dos templates de uma disciplina
+    /**
+     * Cria um template de questão. Retorna codigo e texto dos templates de uma disciplina
+     * @param codigoDisciplina
+     * @return Map<Codigo,texto>
+     */
     public Map<Integer,String> getTemplates(String codigoDisciplina);
-    // retorna o codigo do novo template criado
+    /**
+     * Cria um template de questão. Retorna o codigo do novo template criado
+     * @param codigoDisciplina
+     * @param template
+     * @return codigo do template
+     */
     public int criarTemplate(String codigoDisciplina, String template);
 
-    // retorna o nome do exame criado
-    public String criarExame(int codigoAvaliacao,String nomeExame, int tipo);
-    // retorna o nome do exame criado
-    public String criarExame(int codigoAvaliacao,String nomeExame, int tipo, int codigoTemplate);
+    /**
+     * Cria um exame. Retorna o nome do exame criado
+     * @param codigoDisciplina
+     * @param nomeTurma
+     * @param nomeExame
+     * @param tipo
+     * @return nome do exame
+     */
+    public String criarExame(String codigoDisciplina, String nomeTurma,String nomeExame, int tipo);
+    /**
+     * Cria um exame. Retorna o nome do exame criado
+     * @param codigoDisciplina
+     * @param nomeTurma
+     * @param nomeExame
+     * @param tipo
+     * @param codigoTemplate
+     * @return nome do exame
+     */
+    public String criarExame(String codigoDisciplina, String nomeTurma,String nomeExame, int tipo, int codigoTemplate);
 
-    // retorna o numeor da questao criada
-    public int adicionarQuestao(String nomeExame, String textoQuestao, boolean objetiva);
-    // retorna a letra da opcao criada
-    public char adicionarOpcao(String nomeExame, int numeroQuestao, String textoOpcao);
-    public void setCorreta(String nomeExame, int numeroQuestao, char letra);
+    /**
+     * Adiciona questão em um exame. retorna o numero da questao criada
+     * @param codigoDisciplina
+     * @param nomeTurma
+     * @param nomeExame
+     * @param textoQuestao
+     * @param objetiva
+     * @return número da questão
+     */
+    public int adicionarQuestao(String codigoDisciplina, String nomeTurma,String nomeExame, String textoQuestao, boolean objetiva);
+    /**
+     * Adiciona opção no exame de uma turma. Retorna a letra da opcao criada
+     * @param codigoDisciplina
+     * @param nomeTurma
+     * @param nomeExame
+     * @param numeroQuestao
+     * @param textoOpcao
+     * @return 
+     */ 
+    public char adicionarOpcao(String codigoDisciplina, String nomeTurma,String nomeExame, int numeroQuestao, String textoOpcao);
+    /**
+     * Informa qual a opçãoo correta para uma questão objetiva
+     * @param codigoDisciplina
+     * @param nomeTurma
+     * @param nomeExame
+     * @param numeroQuestao
+     * @param letra 
+     */
+    public void setCorreta(String codigoDisciplina, String nomeTurma,String nomeExame, int numeroQuestao, char letra);
 
-    // retorna codigo das solucoes de um exame
-    public List<Integer> getSolucoes(String nomeExame);
-    // retorna codigo do exame e o texto do documento
+    /**
+     * retorna codigo das solucoes de um exame
+     * @param codigoDisciplina
+     * @param nomeTurma
+     * @param nomeExame
+     * @return List<Codigo>
+     */
+    public List<Integer> getSolucoes(String codigoDisciplina, String nomeTurma,String nomeExame);
+    /**
+     * retorna codigo do exame e o texto do documento
+     * @param codigoSolucao
+     * @return Map<Codigo,documento>
+     */ 
     public Map<String,String> getResultadosDocumento(int codigoSolucao);
-    // retorna codigo do exame e o texto da resposta de uma questão de uma solucao
+    /**
+     * retorna codigo do exame e o texto da resposta de uma questão de uma solucao
+     * @param codigoSolucao
+     * @param numeroQuestao
+     * @return 
+     */
     public Map<String,String> getResultadosResposta(int codigoSolucao, int numeroQuestao);
-    public void corrigirTrabalho(String codigoExame, int codigoSolucao, float nota, String comentario);
-    public void corrigirProva(String codigoExame, int codigoSolucao, int numeroQuestao, float nota, String comentario);
+    /**
+     * Corrige a solução do trabalho de uma turma
+     * @param codigoDisciplina
+     * @param nomeTurma
+     * @param codigoExame
+     * @param codigoSolucao
+     * @param nota
+     * @param comentario 
+     */
+    public void corrigirTrabalho(String codigoDisciplina, String nomeTurma,String codigoExame, int codigoSolucao, float nota, String comentario);
+    /**
+     * Corrige a solução da prova de uma turma
+     * @param codigoDisciplina
+     * @param nomeTurma
+     * @param codigoExame
+     * @param codigoSolucao
+     * @param numeroQuestao
+     * @param nota
+     * @param comentario 
+     */
+    public void corrigirProva(String codigoDisciplina, String nomeTurma,String codigoExame, int codigoSolucao, int numeroQuestao, float nota, String comentario);
 
     /////////////////////////////////////////////////////////////////////////////////////
     // Aluno
 
-    // retorna se o aluno foi inscrito na turma ou não
+    /**
+     * Inscreve um aluno em uma turma
+     * @param codigoTurma
+     * @param codigoDisciplina
+     * @return se o aluno foi inscrito na turma ou não
+     */
     public boolean inscreverEmTurma(String codigoTurma, String codigoDisciplina);
+    /**
+     * Responde a um exame de uma turma
+     * @param codigoTurma
+     * @param codigoDisciplina
+     * @param nomeExame
+     * @param numeroQuestao
+     * @param resposta 
+     */ 
     public void responderExame(String codigoTurma, String codigoDisciplina, String nomeExame, int numeroQuestao, String resposta);
+    /** 
+     * Responde a um exame de uma turma
+     * @param codigoTurma
+     * @param codigoDisciplina
+     * @param nomeExame
+     * @param resposta 
+     */
     public void responderExame(String codigoTurma, String codigoDisciplina, String nomeExame, String resposta);
 
-    // retorna a nota de uma aluno em um exame
+    /**
+     * retorna a nota de uma aluno em um exame
+     * @param codigoTurma
+     * @param codigoDisciplina
+     * @param nomeExame
+     * @return a nota de uma aluno em um exame
+     */
     public float notaResultado(String codigoTurma, String codigoDisciplina, String nomeExame);
-    // retorna o comentário do resultado de um trabalho
+    /**
+     * retorna o comentário do resultado de um trabalho
+     * @param codigoTurma
+     * @param codigoDisciplina
+     * @param nomeExame
+     * @return o comentário do resultado de um trabalho
+     */
     public String visualizarResultadoDocumento(String codigoTurma, String codigoDisciplina, String nomeExame);
-    // retorna o numero da questão e o comentário de uma prova
+    /**
+     * retorna o numero da questão e o comentário de uma prova
+     * @param codigoTurma
+     * @param codigoDisciplina
+     * @param nomeExame
+     * @return Map<Numero,comentario>
+     */
     public Map<Integer,String> visualizarResultadoResposta(String codigoTurma, String codigoDisciplina, String nomeExame);
-    // retorna o numero da questão e a nota da questão de uma prova 
+    /**
+     * retorna o numero da questão e a nota da questão de uma prova 
+     * @param codigoTurma
+     * @param codigoDisciplina
+     * @param nomeExame
+     * @return Map<Numero,nota>
+     */
     public Map<Integer,Float> notaResultadoResposta(String codigoTurma, String codigoDisciplina, String nomeExame);
 
     

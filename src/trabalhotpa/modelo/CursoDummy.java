@@ -5,8 +5,6 @@
  */
 package trabalhotpa.modelo;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -97,11 +95,6 @@ public class CursoDummy implements ICurso {
     }
 
     @Override
-    public Map<String, String> getTurmas() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public void criarTurma(String codigoDisciplina, String nome) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -122,32 +115,32 @@ public class CursoDummy implements ICurso {
     }
 
     @Override
-    public String criarExame(int codigoAvaliacao, String nomeExame, int tipo) {
+    public String criarExame(String codigoDisciplina, String nomeTurma,String nomeExame, int tipo) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String criarExame(int codigoAvaliacao, String nomeExame, int tipo, int codigoTemplate) {
+    public String criarExame(String codigoDisciplina, String nomeTurma,String nomeExame, int tipo, int codigoTemplate) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public int adicionarQuestao(String nomeExame, String textoQuestao, boolean objetiva) {
+    public int adicionarQuestao(String codigoDisciplina, String nomeTurma,String nomeExame, String textoQuestao, boolean objetiva) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public char adicionarOpcao(String nomeExame, int numeroQuestao, String textoOpcao) {
+    public char adicionarOpcao(String codigoDisciplina, String nomeTurma,String nomeExame, int numeroQuestao, String textoOpcao) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void setCorreta(String nomeExame, int numeroQuestao, char letra) {
+    public void setCorreta(String codigoDisciplina, String nomeTurma,String nomeExame, int numeroQuestao, char letra) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<Integer> getSolucoes(String nomeExame) {
+    public List<Integer> getSolucoes(String codigoDisciplina, String nomeTurma,String nomeExame) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -162,12 +155,12 @@ public class CursoDummy implements ICurso {
     }
 
     @Override
-    public void corrigirTrabalho(String codigoExame, int codigoSolucao, float nota, String comentario) {
+    public void corrigirTrabalho(String codigoDisciplina, String nomeTurma,String codigoExame, int codigoSolucao, float nota, String comentario) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void corrigirProva(String codigoExame, int codigoSolucao, int numeroQuestao, float nota, String comentario) {
+    public void corrigirProva(String codigoDisciplina, String nomeTurma,String codigoExame, int codigoSolucao, int numeroQuestao, float nota, String comentario) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
