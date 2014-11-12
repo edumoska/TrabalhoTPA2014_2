@@ -1,4 +1,4 @@
-﻿/*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -86,18 +86,18 @@ public interface ICurso {
     // Aluno
 
     // retorna se o aluno foi inscrito na turma ou não
-    public boolean inscreverEmTurma(String codigoTurma);
-    public void responderExame(String nomeExame, int numeroQuestao, String resposta);
-    public void responderExame(String nomeExame, String resposta);
+    public boolean inscreverEmTurma(String codigoTurma, String codigoDisciplina);
+    public void responderExame(String codigoTurma, String codigoDisciplina, String nomeExame, int numeroQuestao, String resposta);
+    public void responderExame(String codigoTurma, String codigoDisciplina, String nomeExame, String resposta);
 
     // retorna a nota de uma aluno em um exame
-    public float notaResultado(String nomeExame);
+    public float notaResultado(String codigoTurma, String codigoDisciplina, String nomeExame);
     // retorna o comentário do resultado de um trabalho
-    public String visualizarResultadoDocumento(String nomeExame);
+    public String visualizarResultadoDocumento(String codigoTurma, String codigoDisciplina, String nomeExame);
     // retorna o numero da questão e o comentário de uma prova
-    public Map<Integer,String> visualizarResultadoResposta(String nomeExame);
+    public Map<Integer,String> visualizarResultadoResposta(String codigoTurma, String codigoDisciplina, String nomeExame);
     // retorna o numero da questão e a nota da questão de uma prova 
-    public Map<Integer,Float> notaResultadoResposta(String nomeExame);
+    public Map<Integer,Float> notaResultadoResposta(String codigoTurma, String codigoDisciplina, String nomeExame);
 
     
 }

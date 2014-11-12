@@ -8,7 +8,6 @@ package trabalhotpa;
 import java.awt.Frame;
 import javax.swing.JFrame;
 import trabalhotpa.modelo.CursoDummy;
-import trabalhotpa.ui.JPanelPrincipal;
 import trabalhotpa.ui.MenuPrincipal;
 
 /**
