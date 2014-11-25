@@ -3,14 +3,9 @@ package trabalhotpa;
 public class Trabalho extends Exame {
 	private String enunciado;
 
-	public Trabalho(String codigoDisciplina, String nomeTurma,
-			String nomeExame, int tipo) {
-		super(codigoDisciplina, nomeTurma, nomeExame, tipo);
-	}
-
-	public Trabalho(String codigoDisciplina, String nomeTurma,
-			String nomeExame, int tipo, int codigoTemplate) {
-		super(codigoDisciplina, nomeTurma, nomeExame, tipo, codigoTemplate);
+	public Trabalho(String nome,String enunciado) {
+		super(nome);
+		this.enunciado = enunciado;
 	}
 
 	public String getEnunciado() {

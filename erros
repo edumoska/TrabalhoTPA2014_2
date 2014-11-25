@@ -1,0 +1,11 @@
+Log de erros:
+
+1) Método addAluno() da classe Turma está retornando void quando é para retornar boolean;
+
+2) Método getTurmas() falta receber o codigo da turma (getCodigo());
+
+3) Classe Turma não tem código da turma;
+
+4) Método getMinhasTurmas(Aluno) falta receber o codigo da turma e os alunos (getAlunos());
+
+5) Método getTurmasAtivas() falta receber o getEncerrada() do tipo booleano;

@@ -17,9 +17,6 @@ public class Avaliacao {
 		return nomes;
 	}
 
-	// m�todo retorna a quantidade de quest�es de um exame, se o exame n�o
-	// existir o valor retornado � 0
-
 	public int totalQuestoes(String nomeExame) {
 		for (Exame item : exames) {
 			if (item.getNome() == nomeExame) {
@@ -29,33 +26,24 @@ public class Avaliacao {
 		return 0;
 	}
 
-	// O par�metro tipo determina o tipo de exame, 0 para prova e 1 para
-	// trabalho
-
-	public String addExame(String codigoDisciplina, String nomeTurma,
-			String nomeExame, int tipo) {
-		Exame e;
-		if (tipo == 0) {
-			e = new Prova(codigoDisciplina, nomeTurma, nomeExame, tipo);
-		} else {
-			e = new Trabalho(codigoDisciplina, nomeTurma, nomeExame, tipo);
+	public String addExame(Prova p) {
+		for (Exame item : exames) {
+			if (item.getNome() == p.getNome()) {
+				return "NULL";
+			}
 		}
-		exames.add(e);
-		return e.getNome();
+		exames.add(p);
+		return p.getNome();
 	}
 
-	public String addExame(String codigoDisciplina, String nomeTurma,
-			String nomeExame, int tipo, int codigoTemplate) {
-		Exame e;
-		if (tipo == 0) {
-			e = new Prova(codigoDisciplina, nomeTurma, nomeExame, tipo,
-					codigoTemplate);
-		} else {
-			e = new Trabalho(codigoDisciplina, nomeTurma, nomeExame, tipo,
-					codigoTemplate);
+	public String addExame(Trabalho t) {
+		for (Exame item : exames) {
+			if (item.getNome() == t.getNome()) {
+				return "NULL";
+			}
 		}
-		exames.add(e);
-		return e.getNome();
+		exames.add(t);
+		return t.getNome();
 	}
 
 	public Turma getTurma() {

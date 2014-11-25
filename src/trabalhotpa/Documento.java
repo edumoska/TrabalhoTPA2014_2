@@ -1,68 +1,55 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 package trabalhotpa;
 
 import java.util.Date;
 
+/**
+ *
+ * @author Henrique Silveira
+ */
+
 public class Documento extends Resultado {
 	
-	/**
-	 * O trabalho a que se refere o Documento
-	 */	
-	private Trabalho t;
-	
-	/**
-	 * Comentario sobre o resultado do trabalho, dado por um professor
-	 */
-	private String comentario;
-	
-	/**
-	 * Texto que representa o documento do aluno de um trabalho
-	 */
-	private String doc;
-	
-	/**
-	 * Data de entrega do trabalho
-	 */
-	private Date dataEntrega;
-	
-	public Documento(Trabalho t, String doc)
-	{
-		this.t = t;
-		this.caminho = caminho;
-		this.comentario = comentario;
-		this.doc = doc;
+	private final Trabalho trabalho;
+	private String texto;
+	private Date dataEntregue;
+        private String endereco;
+		
+	public Documento (Trabalho trabalho, String texto, Solucao solucao){
+                super("documento", solucao);
+		this.trabalho = trabalho;
+		this.nota = 0;	
+		this.texto = texto;
+        }
+        
+	public String getTexto(){
+		return this.texto;
 	}
 	
-	public Trabalho getTrabalho()
-	{
-		return trabalho;
+	public void setTexto(String texto){
+		this.texto = texto;
 	}
 	
-	public void setTrabalho(Trabalho t)
-	{
-		this.t = t;
+	public Date getDataEntregue(){
+	
+		return this.dataEntregue;
 	}
 	
-	/**
-	 * Retorna o Documento que representa o arquivo 
-	 */
-	public String getDoc()
-	{
-		return doc;
+	public void setDataEntregue(Date data){
+		this.dataEntregue = data;
+	}   
+    
+	public String getEndereco(){
+		return this.endereco;
 	}
 	
-	/**
-	 * Insere um comentario do Resultado de um trabalho
-	 */
-	public void setComentario(String comentario)
-	{
-		this.comentario = comentario;
+	public void setEndereco(String endereco){
+		this.endereco = endereco;
 	}
-	
-	/**
-	 * retorna o comentario do Resultado do Trabalho
-	 */
-	public String getComentario()
-	{
-		return comentario;
-	}
+
 }

@@ -1,8 +1,6 @@
 package trabalhotpa;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Turma {
 	private String nome;
@@ -26,10 +24,13 @@ public class Turma {
 		alunosInscritos = new ArrayList<>();
 	}
 
-	public void addAluno(Aluno aluno) {
-		alunosInscritos.add(aluno);
+	public boolean addAluno(Aluno aluno) {
+		if (alunosInscritos.add(aluno))
+			return true;
+		else
+			return false;
 	}
-	
+
 	public void removerAluno(String matricula) {
 		for (Aluno item : alunosInscritos) {
 			if (item.getMatricula() == matricula) {
@@ -38,12 +39,8 @@ public class Turma {
 		}
 	}
 
-	public Map<String, String> getAlunosTurma() {
-		Map<String, String> alunos = new HashMap<>();
-		for (Aluno item : alunosInscritos) {
-			alunos.put(item.getMatricula(), item.getNome());
-		}
-		return alunos;
+	public ArrayList<Aluno> getAlunos(){
+			return alunosInscritos;
 	}
 
 	public String getNome() {

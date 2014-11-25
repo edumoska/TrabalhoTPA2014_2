@@ -14,12 +14,11 @@ public class Prova extends Exame{
     //armazena uma lista de questões
     private final ArrayList<Questao> prova;
     //armazena o nome da prova
-    private String nome;
     //pontuação total da prova
     private float pontuacaoTotal;
     //constroi o objeto prova
-    public Prova(String codigoDisciplina, String nomeTurma, String name,int tipo){
-        super( codigoDisciplina, nomeTurma, name,tipo);
+    public Prova(String nome){
+        super(nome);
         this.pontuacaoTotal = 0;
         this.prova = new ArrayList<Questao>();
     }

@@ -1,79 +1,84 @@
 package trabalhotpa;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Solucao {
 	
 	/**
-	 * Ajuda na geração de um código de solução
-	 */
-	private static int geradorID = 0;
-	
-	/**
 	 * Lista dos resultados de um avaliação
 	 * 
-	 * Um resultado pode ser um conjunto de Documento que representa
-	 * um trabalho e/ou conjunto de resposta de questões de uma prova
+	 * Cada resultado representa um exame, no qual está associado a mesma
+         * turma.
+	 * 
 	 */
-	ArrayList<Resultado> r;
+	private ArrayList<Resultado> resultados;
 	
 	/**
 	 * Avaliacao do aluno na qual se refere essa solução
 	 */
-	Avaliacao a;
-	
+	private Avaliacao a;
+        
+        /**
+         * Lista do nome de todos os exames. o Exame na ordem i se refere
+         * ao resultado na ordem i em resultados
+         */
+        private List<String> exames;
+        
 	/**
-	 * Código que identifica uma Solucao
+	 * identificador de uma Solucao
 	 */
-	int codigo;
+	private int codigo;
+        
+        /**
+         *  Gerador de código para cada Solucao criada
+         */
+        private static int geradorCodigo;
+	
+        // inicializa o gerador com o codigo do primeiro objeto criado
+        static {
+            
+            geradorCodigo = 0;
+        
+        }
 	
 	public Solucao(Avaliacao a)
 	{
-		Solucao(a, null);
-	}
-	
-	public Solucao(Avaliacao a, ArrayList<Resultado> r)
-	{
 		this.a = a;
-		this.r = r;
-		codigo = geradorID++;
+                
+                exames = a.getExames();
+                
+                // tamanho de resultados o mesmo que exames
+		this.resultados = new ArrayList<>(a.getExames().size());
+                codigo = geradorCodigo++;
 	}
-	
-	/**
-	 * Cria um Objeto Resultado dependendo do tipo
-	 */
-	public Resultado createResultado(String tipo)
-	{
-		switch (tipo)
-		{
-			case tipo.equalsIgnoreCase("resultado"):
-			
-			break;
-			
-			case tipo.equalsIgnoreCase("Documento"):
-			
-			break;
-			
-			default: return null;
-			
-		}
-	}
-	
-	/**
-	 * Retorna uma lista de todos os trabalhos de uma solução
-	 */
-	public ArrayList<Documento> getDocumentos()
-	{
-		ArrayList<Documento> docs = new ArrayList<Documento>();
-		
-		for (Resultado t: r)
-		{
-			if (t instanceof Trabalho)
-				docs.add(t);
-		}
-		
-		return docs;
-	}
+        
+        /**
+         * Dados o nome do exame pega o resultado correspondente
+         */
+        public Resultado getResultado(String exameNome)
+        {
+            Resultado r = null;
+            
+            
+            for (int i = 0; i < exames.size(); i++)
+            {
+                if (exames.get(i).equalsIgnoreCase(exameNome))
+                {
+                    return resultados.get(i);
+                }
+            }
+            
+            return r;
+        }
+        
+        /**
+         * Retorna o código da Solucao
+         */
+        public int getCodigo()
+        {
+            return codigo;
+        }
 	
 	/**
 	 * Insere uma Avaliacao na solucao do aluno
@@ -81,45 +86,97 @@ public class Solucao {
 	public void setAvaliacao(Avaliacao a)
 	{
 		this.a = a;
-	}
-	
-	/**
-	 * Adiciona um documento de um trabalho junto com o caminhode onde está
-	 * o documento
-	 */
-	public void addDocumento(Trabalho t, String caminho)
-	{
-		Document doc = new Document(t, caminho);
-		this.r.add(doc);
-	}
-	
-	public void inserirNotaDocumento()
-	{
-		
-	}
-	
-	public void addResposta()
-	{
-		Reposta r = new Reposta();
-	}
-	
-	public void removeResultado(Resultado r)
-	{
-		this.r.remove(r);
-	}
-	
-    
-    // retorna o comentário do resultado de um trabalho
-    public String visualizarResultadoDocumento(String codigoDisciplina, String codigoTurma, String nomeExame){
-		
-		List<Exame> exames = a.getExames();
-		
-		for(Exame e: exames)
-		{
-			if (e.getCodigoDisciplina() == codigoDisciplina && e.getCodigoTurma() == codigoTurma && nomeExame == e.getNomeExame())
-				return 
-		}
-		
-		return null;
-	}
+        }
+        
+        /**
+         * Adiciona um documento a lista de resultados
+         * 
+         * @param t
+         * @param caminho
+         * @return 
+         */
+        public boolean addDocumento(Trabalho t, String caminho)
+        {
+            return resultados.add(new Documento(t, caminho, this));
+        }
+        
+        /**
+         * Retorna uma lista de todos os resultados
+         */
+        public List<Resultado> getResultados()
+        {
+            ArrayList<Resultado> r = new ArrayList<>(resultados.size());
+            
+            for (Resultado t: resultados)
+            {
+                r.add(t);
+            }
+            
+            return r;
+        }
+        
+        /**
+         * Adiciona uma resposta a lista de resultados da solução
+         * @param q
+         * @return 
+         */
+        public boolean addResposta(Questao q)
+        {
+            return resultados.add(new Resposta(q, this));
+        }
+        
+        /**
+         * Retorna todos os Trabalhos da Solucao
+         * 
+         * @return
+         */
+        public List<Resultado> getDocumentos()
+        {
+            ArrayList<Resultado> documentos = new ArrayList<>();
+            
+            for (Resultado r: resultados)
+            {
+                if (r.getTipo().equalsIgnoreCase("documento"))
+                    documentos.add(r);
+            }
+            
+            return documentos;
+        }
+        
+        /**
+         * Retornas todas as respostas do documento
+         */
+        public List<Resultado> getRespostas()
+        {
+            ArrayList<Resultado> respostas = new ArrayList<>();
+            
+            for (Resultado r: resultados)
+            {
+                if (r.getTipo().equalsIgnoreCase("resposta"))
+                    respostas.add(r);
+            }
+            
+            return respostas;
+        }
+        
+        /**
+         * Somatorio da nota dada pelo professor em cada um dos seus resultados
+         * 
+         * @return double O total da nota
+         */
+        public double calcularNota()
+        {
+            double total = 0.0;
+            
+            for (Resultado r: resultados)
+                total += r.getNota();
+            
+            return total;
+        }
+        
+        public boolean removeResultado(Resultado r)
+        {
+            exames.remove(resultados.indexOf(r));
+            return resultados.remove(r);
+        }
 }
