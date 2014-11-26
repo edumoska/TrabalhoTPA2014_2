@@ -21,7 +21,7 @@ public class Principal {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        MenuPrincipal menu = new MenuPrincipal(new CursoDummy());
+        MenuPrincipal menu = new MenuPrincipal(new Curso());
         while(menu.menu());
     }
     

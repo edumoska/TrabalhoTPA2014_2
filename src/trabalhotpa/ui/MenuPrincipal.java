@@ -6,9 +6,11 @@
 package trabalhotpa.ui;
 
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
+import java.util.HashMap;
 import java.util.Scanner;
-import trabalhotpa.modelo.ICurso;
+import trabalhotpa.ICurso;
 
 /**
  *
@@ -404,14 +406,154 @@ public class MenuPrincipal {
     }
 
     private void CriarExame() {
+        System.out.println("Criar Exame");
         
+        System.out.print("Codigo da Disciplna: ");
+        String codigo = readLine();
+        
+        Map<String,String> disciplinas = curso.getDisciplinas();
+        if(!disciplinas.containsKey(codigo)){
+            System.out.println("Não existe disciplina com o codigo digitado");
+            return;
+        }
+        String disc = disciplinas.get(codigo);
+
+        System.out.print("Nome da Turma: ");
+        String nome = readLine();
+        
+        List<String> turmas = curso.getTurmas(codigo);
+        if(!turmas.contains(nome)){
+            System.out.println("Não existe turma com o nome digitado na disciplina " + disc);
+            return;
+        }
+
+        System.out.print("Nome do Exame: ");
+        String exame = readLine();
+        System.out.print("Tipo do Exame (1=trabalho,2=prova): ");
+        int tipo = readInt();
+        
+        if(!confirmar("Deseja criar o exame "+ exame +" na turma " + nome + " da disciplina "+ disc+"?"))
+            return;
+            
+        curso.criarExame(codigo, nome, exame, tipo);
+        
+        System.out.print("Quantidade de questões: ");
+        int qtdQ = readInt();
+        
+        for(int i=0; i < qtdQ; i++){
+            System.out.print("Texto da Questão "+(i+1)+": ");
+            String questao = readLine();
+            System.out.print("Questão Objetiva? (s/n): ");
+            String op = readLine();
+            boolean objetiva = op.equals("s");
+            int num = curso.adicionarQuestao(disc, nome, exame, questao, objetiva);
+            if(objetiva){
+                System.out.print("Quantidade de opções: ");
+                int qtdO = readInt();
+                for(int j=0; j < qtdO; j++){
+                    System.out.print("Texto da Opção "+(j+1)+": ");
+                    String opcao = readLine();
+                    curso.adicionarOpcao(disc, nome, exame, num, opcao);
+                }
+            }
+        }
     }
 
     private void ResponderExame() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("Responder Prova");
+        
+        System.out.print("Codigo da Disciplna: ");
+        String codigo = readLine();
+        
+        Map<String,String> disciplinas = curso.getDisciplinas();
+        if(!disciplinas.containsKey(codigo)){
+            System.out.println("Não existe disciplina com o codigo digitado");
+            return;
+        }
+        String disc = disciplinas.get(codigo);
+
+        System.out.print("Nome da Turma: ");
+        String nome = readLine();
+        
+        List<String> turmas = curso.getTurmas(codigo);
+        if(!turmas.contains(nome)){
+            System.out.println("Não existe turma com o nome digitado na disciplina " + disc);
+            return;
+        }
+        
+        System.out.print("Nome do Exame: ");
+        String exame = readLine();
+        
+        List<String> exames = curso.getExames(disc,nome);
+        if(!exames.contains(exame)){
+            System.out.println("Não existe exame com o nome digitado na turma " + nome + " da disciplina " + disc);
+            return;
+        }
+        
+        int qtd = curso.totalQuestoes(disc,nome,codigo);
+        if(qtd == 0){
+            System.out.print("Caminho do trabalho: ");
+            String caminho = readLine();
+            curso.responderExame(nome, disc, exame, caminho);
+        } else
+            for(int i=1; i <= qtd; i++){
+                System.out.print("Resposta da questão "+ i +": ");
+                String questao = readLine();
+                curso.responderExame(nome, disc, exame, i, questao);
+            }
     }
 
     private void CorrigirExame() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("Corrigir Prova");
+        
+        System.out.print("Codigo da Disciplna: ");
+        String codigo = readLine();
+        
+        Map<String,String> disciplinas = curso.getDisciplinas();
+        if(!disciplinas.containsKey(codigo)){
+            System.out.println("Não existe disciplina com o codigo digitado");
+            return;
+        }
+        String disc = disciplinas.get(codigo);
+
+        System.out.print("Nome da Turma: ");
+        String nome = readLine();
+        
+        List<String> turmas = curso.getTurmas(codigo);
+        if(!turmas.contains(nome)){
+            System.out.println("Não existe turma com o nome digitado na disciplina " + disc);
+            return;
+        }
+        
+        System.out.print("Nome do Exame: ");
+        String exame = readLine();
+        
+        List<String> exames = curso.getExames(disc,nome);
+        if(!exames.contains(exame)){
+            System.out.println("Não existe exame com o nome digitado na turma " + nome + " da disciplina " + disc);
+            return;
+        }
+        
+        List<Integer> solucoes = curso.getSolucoes(disc, nome, exame);
+        
+        int qtd = curso.totalQuestoes(disc,nome,codigo);
+        for(Integer codigoSolucao: solucoes){
+            if(qtd == 0) {
+                System.out.print("Nota: ");
+                String nota = readLine();
+                System.out.print("comentário: ");
+                String comentario = readLine();
+                curso.corrigirExame(disc, nome, exame,codigoSolucao, Float.valueOf(nota), comentario);
+            } else {
+                for(int i=1; i <= qtd; i++){
+                    System.out.print("Nota da questão "+ i +": ");
+                    String nota = readLine();
+                    System.out.print("comentário da questão "+ i +": ");
+                    String comentario = readLine();
+                    curso.corrigirExame(disc, nome, exame, codigoSolucao, i, Float.valueOf(nota), comentario);
+                }
+            }
+        }
     }
+
 }

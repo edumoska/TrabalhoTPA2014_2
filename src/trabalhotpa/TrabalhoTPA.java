@@ -5,6 +5,7 @@
  */
 package trabalhotpa;
 
+import trabalhotpa.ui.MenuPrincipal;
 import java.awt.Frame;
 import javax.swing.JFrame;
 
